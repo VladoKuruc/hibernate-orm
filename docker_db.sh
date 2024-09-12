@@ -909,9 +909,9 @@ informix() {
 
 informix_14_10() {
     $PRIVILEGED_CLI $CONTAINER_CLI rm -f informix || true
-    mkdir ~/setupvol
-    echo "ALLOW_NEWLINE 1" > ~/setupvol/onconfig.mod
-    $PRIVILEGED_CLI $CONTAINER_CLI run --name informix --privileged -p 9088:9088 -v ~/setupvol:/opt/ibm/config -e LICENSE=accept -e GL_USEGLU=1 -d ${DB_IMAGE_INFORMIX_14_10:-icr.io/informix/informix-developer-database:14.10.FC9W1DE}
+    $PRIVILEGED_CLI $CONTAINER_CLI mkdir /tmp/setupvol
+    $PRIVILEGED_CLI echo "ALLOW_NEWLINE 1" > /tmp/setupvol/onconfig.mod
+    $PRIVILEGED_CLI $CONTAINER_CLI run --name informix --privileged -p 9088:9088 -v /tmp/setupvol:/opt/ibm/config -e LICENSE=accept -e GL_USEGLU=1 -d ${DB_IMAGE_INFORMIX_14_10:-icr.io/informix/informix-developer-database:14.10.FC9W1DE}
     echo "Starting Informix. This can take a few minutes"
     # Give the container some time to start
     OUTPUT=
